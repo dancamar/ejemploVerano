@@ -1,121 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 
 function FormDatos() {
+
+  const variablesInicio={
+    numero1: " ",
+    numero2:" "
+  };
+
+  const [values, setValues] = useState(variablesInicio);
+
+  const cambioInput = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const onClick = (e) => {
+    e.preventDefault();
+    let suma=parseInt(values.numero1)*parseInt(values.numero2);
+    alert("La suma es:"+suma)
+    setValues(variablesInicio);
+      };
+
   return (
     <div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-4">
-          <label for="validationCustom01" class="form-label">
-            First name
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            id="validationCustom01"
-            value="Mark"
-            required
-          />
-          <div class="valid-feedback">Looks good!</div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustom02" class="form-label">
-            Last name
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            id="validationCustom02"
-            value="Otto"
-            required
-          />
-          <div class="valid-feedback">Looks good!</div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustomUsername" class="form-label">
-            Username
-          </label>
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend">
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">Card title</h5>
+          <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">
               @
             </span>
+
             <input
               type="text"
-              class="form-control"
-              id="validationCustomUsername"
-              aria-describedby="inputGroupPrepend"
-              required
+              className="form-control"
+              placeholder="Inserte numero 1"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              name="numero1"
+              onChange={cambioInput}
+              value={values.numero1}
             />
-            <div class="invalid-feedback">Please choose a username.</div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label for="validationCustom03" class="form-label">
-            City
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            id="validationCustom03"
-            required
-          />
-          <div class="invalid-feedback">Please provide a valid city.</div>
-        </div>
-        <div class="col-md-3">
-          <label for="validationCustom04" class="form-label">
-            State
-          </label>
-          <select class="form-select" id="validationCustom04" required>
-            <option selected disabled value="">
-              Choose...
-            </option>
-            <option>...</option>
-          </select>
-          <div class="invalid-feedback">Please select a valid state.</div>
-        </div>
-        <div class="col-md-3">
-          <label for="validationCustom05" class="form-label">
-            Zip
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            id="validationCustom05"
-            required
-          />
-          <div class="invalid-feedback">Please provide a valid zip.</div>
-        </div>
-        <div class="col-12">
-          <div class="form-check">
+<br/>
             <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="invalidCheck"
-              required
+              type="text"
+              className="form-control"
+              placeholder="Inserte nombre"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              name="numero2"
+              onChange={cambioInput}
+              value={values.numero2}
             />
-            <label class="form-check-label" for="invalidCheck">
-              Agree to terms and conditions
-            </label>
-            <div class="invalid-feedback">
-              You must agree before submitting.
-            </div>
+
+            <button type="button" className="btn btn-success" onClick={onClick}>
+              Success
+            </button>
           </div>
-        </div>
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit">
-            Submit form
-          </button>
-        </div>
-      </form>
-          
         </div>
       </div>
     </div>
-
   );
 }
 
