@@ -9,17 +9,20 @@ function FormDatos() {
 
   const [values, setValues] = useState(variablesInicio);
 
+  //funcion para el input
   const cambioInput = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
 
+  //funcion para el boton
   const onClick = (e) => {
     e.preventDefault();
     let suma=parseInt(values.numero1)*parseInt(values.numero2);
     alert("La suma es:"+suma)
     setValues(variablesInicio);
       };
+  
 
   return (
     <div>
