@@ -4,8 +4,9 @@ function FormDatos() {
  
 
   const variablesInicio={
-    numero1: "",
-    numero2:" "
+    nombre: "",
+    apellidos:" ",
+    direccion:""
   };
 
   const [values, setValues] = useState(variablesInicio);
@@ -17,8 +18,8 @@ function FormDatos() {
 
   const onClick = (e) => {
     e.preventDefault();
-    let suma=parseInt(values.numero1)+parseInt(values.numero2);
-    alert("La suma es:" + suma);
+    //let suma=parseInt(values.numero1)+parseInt(values.numero2);
+    alert("Los datos son:" + values.nombre+" "+values.apellidos+" "+values.direccion);
     setValues(variablesInicio);
   };
 
@@ -26,43 +27,59 @@ function FormDatos() {
     <div>
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <h5 className="card-title">Datos personales</h5>
+          <h6 className="card-subtitle mb-2 text-muted">Ingresar la información requerida</h6>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">
               @
             </span>
             <input
               type="text"
-              class="form-control"
-              placeholder="Username"
-              aria-label="Username"
+              className="form-control"
+              placeholder="Ingrese su nombre"
+              aria-label="nombre"
               aria-describedby="basic-addon1"
-              name="numero1"
+              name="nombre"
               onChange={onChange}
-              value={values.numero1}
+              value={values.nombre}
             />
           </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">
               @
             </span>
             <input
               type="text"
-              class="form-control"
-              placeholder="Username"
-              aria-label="Username"
+              className="form-control"
+              placeholder="Ingrese sus apellidos"
+              aria-label="apellidos"
               aria-describedby="basic-addon1"
-              name="numero2"
+              name="apellidos"
               onChange={onChange}
-              value={values.numero2}
+              value={values.apellidos}
             />
           </div>
 
-          <button type="button" class="btn btn-success" onClick={onClick}>
-            Success
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">
+              @
+            </span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Ingresar la dirección"
+              aria-label="direccion"
+              aria-describedby="basic-addon1"
+              name="direccion"
+              onChange={onChange}
+              value={values.direccion}
+            />
+          </div>
+
+          <button type="button" className="btn btn-success" onClick={onClick}>
+            Enviar
           </button>
         </div>
       </div>
