@@ -6,7 +6,8 @@ function FormDatos() {
   const variablesInicio={
     nombre: "",
     apellidos:" ",
-    direccion:""
+    direccion:"",
+   telefono:""
   };
 
   const [values, setValues] = useState(variablesInicio);
