@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import ConexionApi from '../services/ConexionAxios';
+import React, { useState, useEffect } from "react";
+import Api from '../services/ConexionAxios';
 
 function FormDatos() {
   const variablesInicio = {
+    _id: "",
     nombre: "",
     apellidos: " ",
     direccion: "",
-    telefono: "",
   };
 
   const [values, setValues] = useState(variablesInicio);
+  const [persona, setPersonas]= useState([]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -17,7 +18,7 @@ function FormDatos() {
   };
 
   const guardarPersonas=async()=>{
-    await ConexionApi.post("/persona/crearPersona",{
+    await Api.post("/persona/crearPersona",{
       nombre: values.nombre,
       apellidos: values.apellidos,
       direccion: values.direccion
@@ -25,7 +26,37 @@ function FormDatos() {
       console.log(res);
       //console.log(data);
     });
+    ListarPersonas();
   };
+
+  const ListarPersonas=async()=>{
+    const respuesta= await Api.get('/persona/listarPersonas');
+    setPersonas(respuesta.data);
+    console.log(respuesta.data);
+  }
+
+  const EliminarPersona=async(id)=>{
+   const eliminar= await Api.delete(`/persona/eliminarPersona/${id}`);
+   console.log(eliminar.data);
+    ListarPersonas();
+  }
+
+  const ListarOnePersona=async(id)=>{
+    const res=await Api.get(`/persona/listarPersona/${id}`);
+    setValues(res.data);
+    ListarPersonas();
+  }
+
+  const updatePersona=async(id)=>{
+ await Api.put(`/persona/actualizarPersona/${id}`,{
+   nombre: values.nombre,
+   apellidos: values.apellidos,
+   direccion: values.direccion
+ }).then((res)=>{
+   console.log(res.data);
+ });
+ ListarPersonas();
+  }
 
   const onClick = (e) => {
     e.preventDefault();
@@ -38,9 +69,20 @@ function FormDatos() {
         " " +
         values.direccion
     );*/
-    guardarPersonas();
+
+    if(values._id===""){
+      guardarPersonas();
+    }else{
+      updatePersona(values._id);
+    }
+   
     setValues(variablesInicio);
+    
   };
+
+  useEffect(() => {
+   ListarPersonas();
+  }, [])
 
   return (
     <div>
@@ -92,17 +134,42 @@ function FormDatos() {
                 onChange={onChange}
                 required
               />
-            </div>
-                
-           
+            </div>         
             
             <div class="col-12">
               <button className="btn btn-primary" type="submit">
-                Guardar
+                {values._id===""? "Guardar":"Editar"}
               </button>
+            
             </div>
           </form>
         </div>
+        <hr/>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Direccion</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Eliminar</th>
+    </tr>
+  </thead>
+  {persona.map((person, index)=>(
+    <tbody key={person._id}>
+    <tr>
+      <th scope="row">{index+1}</th>
+      <td>{person.nombre}</td>
+      <td>{person.apellidos}</td>
+      <td>{person.direccion}</td>
+      <td><button type="button" class="btn btn-info" onClick={()=>ListarOnePersona(person._id)}>Editar</button></td>
+      <td><button type="button" class="btn btn-danger" onClick={()=>EliminarPersona(person._id)}>Eliminar</button></td>
+    </tr>
+  </tbody>
+  ))}
+  
+</table>
       </div>
     </div>
   );
