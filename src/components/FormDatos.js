@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Api from '../services/ConexionAxios';
 
+import {toast} from 'react-toastify';
+
 function FormDatos() {
   const variablesInicio = {
     _id: "",
     nombre: "",
     apellidos: " ",
     direccion: "",
+    img:""
   };
 
   const [values, setValues] = useState(variablesInicio);
@@ -22,9 +25,12 @@ function FormDatos() {
       nombre: values.nombre,
       apellidos: values.apellidos,
       direccion: values.direccion
-    }).then((res)=>{
-      console.log(res);
-      //console.log(data);
+    }).then(()=>{
+      toast("Dato guardado correctamente",{
+        position: "top-right",
+        type:"success",
+        autoClose: 5000
+      });
     });
     ListarPersonas();
   };
@@ -36,8 +42,17 @@ function FormDatos() {
   }
 
   const EliminarPersona=async(id)=>{
-   const eliminar= await Api.delete(`/persona/eliminarPersona/${id}`);
-   console.log(eliminar.data);
+    if(window.confirm("¿Esta seguro de borrar los datos?")){
+      const eliminar= await Api.delete(`/persona/eliminarPersona/${id}`);
+      console.log(eliminar.data);
+
+      toast("Los datos se han eliminado correctamente", {
+        type:"error",
+        position:"bottom-right",
+        autoClose:5000
+      });
+    }
+   
     ListarPersonas();
   }
 
